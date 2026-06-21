@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedidos Restaurante</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="encabezado">
+      <p class="etiqueta">Meseros</p>
+      <h1>Tomar pedido</h1>
+    </header>
+
+    <section class="panel" aria-labelledby="titulo-mesa">
+      <h2 id="titulo-mesa">Seleccionar mesa</h2>
+
+      <label class="campo" for="mesa">
+        Mesa
+        <select id="mesa">
+          <option value="">Elige una mesa</option>
+          <option value="1">Mesa 1</option>
+          <option value="2">Mesa 2</option>
+          <option value="3">Mesa 3</option>
+        </select>
+      </label>
+
+      <p id="estado-mesa" class="estado">Todavía no has seleccionado una mesa.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-tacos">
+      <h2 id="titulo-tacos">Tacos</h2>
+      <p class="precio-seccion">Elige tipo y cantidad de órdenes</p>
+
+      <label class="campo" for="tipo-taco">
+        Tipo
+        <select id="tipo-taco">
+          <option value="">Selecciona</option>
+          <option value="Orden de Bistec" data-precio="85">Orden de Bistec - $85</option>
+          <option value="Orden de Tripa" data-precio="120">Orden de Tripa - $120</option>
+        </select>
+      </label>
+
+      <label class="campo separacion" for="cantidad-taco">
+        Cantidad
+        <input id="cantidad-taco" type="number" min="1" value="1">
+      </label>
+
+      <button id="agregar-taco" class="producto accion" type="button">
+        <span>Agregar Tacos</span>
+      </button>
+
+      <p id="error-taco" class="error"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-tostadas">
+      <h2 id="titulo-tostadas">Tostadas</h2>
+      <p class="precio-seccion">$25 c/u</p>
+
+      <label class="campo" for="variante-tostada">
+        Elige una opción
+        <select id="variante-tostada">
+          <option value="">Selecciona</option>
+          <option value="Pollo">Pollo</option>
+          <option value="Carne Deshebrada">Carne Deshebrada</option>
+        </select>
+      </label>
+
+      <label class="campo separacion" for="cantidad-tostada">
+        Cantidad
+        <input id="cantidad-tostada" type="number" min="1" value="1">
+      </label>
+
+      <button id="agregar-tostada" class="producto accion" type="button">
+        <span>Agregar Tostada</span>
+        <strong>$25</strong>
+      </button>
+
+      <p id="error-tostada" class="error"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-empanadas">
+      <h2 id="titulo-empanadas">Empanadas</h2>
+      <p class="precio-seccion">$88 orden</p>
+
+      <label class="campo" for="variante-empanada">
+        Elige una opción
+        <select id="variante-empanada">
+          <option value="">Selecciona</option>
+          <option value="Picadillo">Picadillo</option>
+          <option value="Queso">Queso</option>
+          <option value="Pollo">Pollo</option>
+        </select>
+      </label>
+
+      <label class="campo separacion" for="cantidad-empanada">
+        Cantidad
+        <input id="cantidad-empanada" type="number" min="1" value="1">
+      </label>
+
+      <button id="agregar-empanada" class="producto accion" type="button">
+        <span>Agregar Empanada</span>
+        <strong>$88</strong>
+      </button>
+
+      <p id="error-empanada" class="error"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-picaditas">
+      <h2 id="titulo-picaditas">Picaditas</h2>
+      <p class="precio-seccion">$100 orden</p>
+
+      <label class="campo" for="salsa-picadita">
+        Elige salsa o base
+        <select id="salsa-picadita">
+          <option value="">Selecciona</option>
+          <option value="Salsa Verde">Salsa Verde</option>
+          <option value="Salsa Roja">Salsa Roja</option>
+          <option value="Frijol">Frijol</option>
+        </select>
+      </label>
+
+      <label class="campo separacion" for="guiso-picadita">
+        Elige guiso
+        <select id="guiso-picadita">
+          <option value="">Selecciona</option>
+          <option value="Bistec">Bistec</option>
+          <option value="Picadillo">Picadillo</option>
+          <option value="Pollo">Pollo</option>
+          <option value="Huevo">Huevo</option>
+        </select>
+      </label>
+
+      <label class="campo separacion" for="cantidad-picadita">
+        Cantidad
+        <input id="cantidad-picadita" type="number" min="1" value="1">
+      </label>
+
+      <button id="agregar-picadita" class="producto accion" type="button">
+        <span>Agregar Picadita</span>
+        <strong>$100</strong>
+      </button>
+
+      <p id="error-picadita" class="error"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-otros">
+      <h2 id="titulo-otros">Otros platillos</h2>
+
+      <div class="lista-productos">
+        <button class="producto" type="button" data-nombre="Garnachas" data-precio="80">
+          <span>Garnachas</span>
+          <strong>$80</strong>
+        </button>
+
+        <button class="producto" type="button" data-nombre="Enchiladas Verdes" data-precio="90">
+          <span>Enchiladas Verdes</span>
+          <strong>$90</strong>
+        </button>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-resumen">
+      <h2 id="titulo-resumen">Cuenta de la mesa</h2>
+      <ul id="lista-pedido" class="lista-pedido"></ul>
+      <p id="pedido-vacio" class="estado">La cuenta está vacía.</p>
+      <p class="total">Total de la cuenta: <strong id="total">$0</strong></p>
+      <button id="enviar-cocina" class="boton-enviar" type="button">Enviar a Cocina</button>
+      <button id="borrar-pedido" class="boton-borrar" type="button">Borrar cuenta</button>
+      <p id="error-envio" class="error"></p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
