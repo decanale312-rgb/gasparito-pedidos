@@ -34,7 +34,7 @@ const errorEnvio = document.querySelector("#error-envio");
 
 const configuracionPredeterminada = {
   nombreRestaurante: "Restaurante",
-  numeroWhatsApp: "526563171683",
+  numeroWhatsApp: "520000000000",
   numeroMesas: 3,
   incluirTotalWhatsApp: true
 };

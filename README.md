@@ -28,3 +28,5 @@ La seccion `Configuracion del restaurante` permite cambiar:
 - Si el total se incluye en WhatsApp.
 
 La configuracion se guarda en el navegador con `localStorage`. Si no hay configuracion guardada, la app usa los valores de prueba.
+
+El WhatsApp predeterminado es un numero ficticio. El dueno debe reemplazarlo desde la seccion `Configuracion del restaurante`.
