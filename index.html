@@ -11,7 +11,35 @@
     <header class="encabezado">
       <p class="etiqueta">Meseros</p>
       <h1>Tomar pedido</h1>
+      <p id="nombre-restaurante" class="nombre-restaurante">Restaurante</p>
     </header>
+
+    <section class="panel" aria-labelledby="titulo-configuracion">
+      <h2 id="titulo-configuracion">Configuración del restaurante</h2>
+
+      <label class="campo" for="config-nombre">
+        Nombre del restaurante
+        <input id="config-nombre" type="text" placeholder="Restaurante">
+      </label>
+
+      <label class="campo separacion" for="config-whatsapp">
+        WhatsApp de cocina
+        <input id="config-whatsapp" type="tel" inputmode="tel" placeholder="526563171683">
+      </label>
+
+      <label class="campo separacion" for="config-mesas">
+        Número de mesas
+        <input id="config-mesas" type="number" min="1" max="30" value="3">
+      </label>
+
+      <label class="campo-check separacion" for="config-incluir-total">
+        <input id="config-incluir-total" type="checkbox" checked>
+        Incluir total en WhatsApp
+      </label>
+
+      <button id="guardar-configuracion" class="boton-secundario" type="button">Guardar configuración</button>
+      <p id="estado-configuracion" class="estado"></p>
+    </section>
 
     <section class="panel" aria-labelledby="titulo-mesa">
       <h2 id="titulo-mesa">Seleccionar mesa</h2>

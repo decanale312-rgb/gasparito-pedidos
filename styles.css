@@ -30,6 +30,12 @@ body {
   text-transform: uppercase;
 }
 
+.nombre-restaurante {
+  margin: 8px 0 0;
+  color: #5b554f;
+  font-weight: 700;
+}
+
 h1,
 h2,
 p {
@@ -56,6 +62,18 @@ h2 {
   display: grid;
   gap: 8px;
   font-weight: 700;
+}
+
+.campo-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.campo-check input {
+  width: 20px;
+  min-height: 20px;
 }
 
 .separacion {
@@ -173,6 +191,23 @@ input {
 }
 
 .boton-enviar:active {
+  transform: scale(0.99);
+}
+
+.boton-secundario {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 14px;
+  padding: 12px;
+  font: inherit;
+  font-weight: 700;
+  color: #1f1f1f;
+  background: #eef4ff;
+  border: 1px solid #9ab0d1;
+  border-radius: 8px;
+}
+
+.boton-secundario:active {
   transform: scale(0.99);
 }
 

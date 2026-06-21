@@ -15,15 +15,16 @@ Esta es una aplicacion web sencilla para tomar pedidos desde celular.
 3. Elige variantes cuando el producto las pida.
 4. Revisa el resumen y el total.
 5. Usa `Quitar` si agregaste algo por error.
-6. Usa `Borrar pedido` para empezar de nuevo.
+6. Usa `Borrar cuenta` para empezar de nuevo.
 7. Usa `Enviar a Cocina` para abrir WhatsApp con el mensaje listo.
 
-## Nota
+## Configuracion
 
-El numero de WhatsApp usado en este prototipo esta en `app.js`:
+La seccion `Configuracion del restaurante` permite cambiar:
 
-```js
-const numeroCocina = "526563171683";
-```
+- Nombre del restaurante.
+- WhatsApp de cocina.
+- Numero de mesas.
+- Si el total se incluye en WhatsApp.
 
-Para cambiarlo, reemplaza ese valor por el numero correcto con codigo de pais.
+La configuracion se guarda en el navegador con `localStorage`. Si no hay configuracion guardada, la app usa los valores de prueba.

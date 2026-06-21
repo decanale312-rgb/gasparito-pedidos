@@ -1,5 +1,12 @@
 const selectorMesa = document.querySelector("#mesa");
 const estadoMesa = document.querySelector("#estado-mesa");
+const nombreRestaurante = document.querySelector("#nombre-restaurante");
+const campoConfigNombre = document.querySelector("#config-nombre");
+const campoConfigWhatsapp = document.querySelector("#config-whatsapp");
+const campoConfigMesas = document.querySelector("#config-mesas");
+const campoConfigIncluirTotal = document.querySelector("#config-incluir-total");
+const botonGuardarConfiguracion = document.querySelector("#guardar-configuracion");
+const estadoConfiguracion = document.querySelector("#estado-configuracion");
 const botonesProducto = document.querySelectorAll(".producto");
 const tipoTaco = document.querySelector("#tipo-taco");
 const cantidadTaco = document.querySelector("#cantidad-taco");
@@ -25,8 +32,17 @@ const botonEnviarCocina = document.querySelector("#enviar-cocina");
 const botonBorrarPedido = document.querySelector("#borrar-pedido");
 const errorEnvio = document.querySelector("#error-envio");
 
-const numeroCocina = "526563171683";
+const configuracionPredeterminada = {
+  nombreRestaurante: "Restaurante",
+  numeroWhatsApp: "526563171683",
+  numeroMesas: 3,
+  incluirTotalWhatsApp: true
+};
+
+let configuracion = cargarConfiguracion();
 const pedido = [];
+
+aplicarConfiguracion();
 
 selectorMesa.addEventListener("change", () => {
   const mesa = selectorMesa.value;
@@ -37,6 +53,32 @@ selectorMesa.addEventListener("change", () => {
   }
 
   estadoMesa.textContent = `Pedido para Mesa ${mesa}.`;
+});
+
+botonGuardarConfiguracion.addEventListener("click", () => {
+  const numeroWhatsApp = normalizarNumeroWhatsApp(campoConfigWhatsapp.value);
+  const numeroMesas = Number(campoConfigMesas.value);
+
+  if (!numeroWhatsApp) {
+    estadoConfiguracion.textContent = "Escribe un WhatsApp válido para cocina.";
+    return;
+  }
+
+  if (!Number.isInteger(numeroMesas) || numeroMesas < 1) {
+    estadoConfiguracion.textContent = "El número de mesas debe ser 1 o más.";
+    return;
+  }
+
+  configuracion = {
+    nombreRestaurante: campoConfigNombre.value.trim() || configuracionPredeterminada.nombreRestaurante,
+    numeroWhatsApp,
+    numeroMesas,
+    incluirTotalWhatsApp: campoConfigIncluirTotal.checked
+  };
+
+  guardarConfiguracion(configuracion);
+  aplicarConfiguracion();
+  estadoConfiguracion.textContent = "Configuración guardada.";
 });
 
 botonesProducto.forEach((boton) => {
@@ -156,7 +198,7 @@ botonEnviarCocina.addEventListener("click", () => {
   errorEnvio.textContent = "";
 
   const mensaje = crearMensajeWhatsApp();
-  const enlaceWhatsApp = `https://wa.me/${numeroCocina}?text=${encodeURIComponent(mensaje)}`;
+  const enlaceWhatsApp = `https://wa.me/${configuracion.numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
 
   window.open(enlaceWhatsApp, "_blank");
 });
@@ -214,6 +256,67 @@ function agregarProductoVariasVeces(producto, campoCantidad, campoError) {
   mostrarPedido();
 }
 
+function cargarConfiguracion() {
+  try {
+    const configuracionGuardada = localStorage.getItem("pedidosRestauranteConfiguracion");
+
+    if (!configuracionGuardada) {
+      return { ...configuracionPredeterminada };
+    }
+
+    return {
+      ...configuracionPredeterminada,
+      ...JSON.parse(configuracionGuardada)
+    };
+  } catch (error) {
+    return { ...configuracionPredeterminada };
+  }
+}
+
+function guardarConfiguracion(nuevaConfiguracion) {
+  try {
+    localStorage.setItem("pedidosRestauranteConfiguracion", JSON.stringify(nuevaConfiguracion));
+  } catch (error) {
+    estadoConfiguracion.textContent = "No se pudo guardar en este navegador.";
+  }
+}
+
+function aplicarConfiguracion() {
+  nombreRestaurante.textContent = configuracion.nombreRestaurante;
+  document.title = `${configuracion.nombreRestaurante} - Pedidos`;
+
+  campoConfigNombre.value = configuracion.nombreRestaurante;
+  campoConfigWhatsapp.value = configuracion.numeroWhatsApp;
+  campoConfigMesas.value = configuracion.numeroMesas;
+  campoConfigIncluirTotal.checked = configuracion.incluirTotalWhatsApp;
+
+  actualizarMesas(configuracion.numeroMesas);
+}
+
+function actualizarMesas(numeroMesas) {
+  const mesaActual = selectorMesa.value;
+
+  selectorMesa.innerHTML = '<option value="">Elige una mesa</option>';
+
+  for (let mesa = 1; mesa <= numeroMesas; mesa += 1) {
+    const opcion = document.createElement("option");
+    opcion.value = String(mesa);
+    opcion.textContent = `Mesa ${mesa}`;
+    selectorMesa.appendChild(opcion);
+  }
+
+  if (mesaActual && Number(mesaActual) <= numeroMesas) {
+    selectorMesa.value = mesaActual;
+  } else {
+    selectorMesa.value = "";
+    estadoMesa.textContent = "Todavía no has seleccionado una mesa.";
+  }
+}
+
+function normalizarNumeroWhatsApp(numero) {
+  return numero.replace(/\D/g, "");
+}
+
 function agruparPedido() {
   const grupos = {};
 
@@ -260,12 +363,13 @@ function crearMensajeWhatsApp() {
   });
 
   return [
+    configuracion.nombreRestaurante.toUpperCase(),
     "PEDIDO PARA COCINA",
     "",
     `Mesa: ${selectorMesa.value}`,
     "",
     ...lineasProductos,
     "",
-    `Total: $${total}`
-  ].join("\n");
+    configuracion.incluirTotalWhatsApp ? `Total: $${total}` : ""
+  ].filter(Boolean).join("\n");
 }
